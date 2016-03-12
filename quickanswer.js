@@ -17,6 +17,7 @@ parser.addArgument(["searchterm"], {
 let args = parser.parseArgs();
 
 if (args.searchterm) searchWeb(args.searchterm).then((data)=>{
+    console.log(data.abstract);
     formatText(data.extracted)
 });
 else {
@@ -33,7 +34,8 @@ const formatText = function (response) {
     for (let topic of response) {
         console.log(clc.bold.green(topic.category));
         for (let item of topic.data) {
-            console.log(item.data)
+            console.log(clc.bold.xterm(39)((item.id)) + " - " + item.data)
+            console.log()
         }
     }
 };
