@@ -17,7 +17,7 @@ parser.addArgument(["searchterm"], {
 let args = parser.parseArgs();
 
 if (args.searchterm) searchWeb(args.searchterm).then((data)=>{
-    console.log(data.related)
+    formatText(data.extracted)
 });
 else {
     console.log(clc.magenta.bold("What are you interested in?"));
@@ -28,3 +28,12 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
+
+const formatText = function (response) {
+    for (let topic of response) {
+        console.log(clc.bold.green(topic.category));
+        for (let item of topic.data) {
+            console.log(item.data)
+        }
+    }
+};
