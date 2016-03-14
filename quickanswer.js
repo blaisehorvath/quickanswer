@@ -1,6 +1,6 @@
 "use strict";
 const clc = require('cli-color');
-const readline = require('readline');
+//const readline = require('readline');
 const searchWeb = require('./lib/searchddg');
 const ArgumentParser = require('argparse').ArgumentParser;
 
@@ -17,25 +17,27 @@ parser.addArgument(["searchterm"], {
 let args = parser.parseArgs();
 
 if (args.searchterm) searchWeb(args.searchterm).then((data)=>{
-    console.log(data.abstract);
-    formatText(data.extracted)
+    formatText(data);
 });
 else {
     console.log(clc.magenta.bold("What are you interested in?"));
 }
 
-/* Configuring io */
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+///* Configuring io */
+//const rl = readline.createInterface({
+//    input: process.stdin,
+//    output: process.stdout
+//});
 
 const formatText = function (response) {
-    for (let topic of response) {
-        console.log(clc.bold.green(topic.category));
+    if (response.mainAnswer != "") {
+        console.log(response.mainAnswer)
+    }
+    for (let topic of response.related) {
+        console.log(clc.bold.green.underline("\n" + topic.category)+"\n");
         for (let item of topic.data) {
-            console.log(clc.bold.xterm(39)((item.id)) + " - " + item.data)
-            console.log()
+            console.log(clc.bold.xterm(39)((item.title)) + (item.data != "" ? " - " : "") + item.data);
         }
     }
+    console.log()
 };
