@@ -22,6 +22,8 @@ if (args.searchterm) searchWeb(args.searchterm).then((data)=>{
 else {
     console.log(clc.magenta.bold("What are you interested in?"));
 }
+//TODO: what the heck -> search for "alma"
+//TODO: be able to start a browser with the schosen result
 
 ///* Configuring io */
 //const rl = readline.createInterface({
